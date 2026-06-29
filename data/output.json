@@ -1,0 +1,351 @@
+[
+  {
+    "candidate_id": "e2c8bd7c-c9ad-4078-ae3b-d8e3d560709e",
+    "full_name": "John Doe",
+    "emails": [
+      "john.doe@email.com"
+    ],
+    "phones": [
+      "+914155550198",
+      "+14155550198"
+    ],
+    "skills": [
+      "Python",
+      "Sql",
+      "Machine Learning"
+    ],
+    "experience": [
+      {
+        "company": "Tech Corp",
+        "title": "Data Scientist",
+        "start_date": "2020-01-01"
+      }
+    ],
+    "education": [],
+    "links": {},
+    "overall_confidence": 0.9,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday"
+      },
+      {
+        "field": "email",
+        "source": "workday"
+      },
+      {
+        "field": "phone",
+        "source": "workday"
+      },
+      {
+        "field": "phone",
+        "source": "greenhouse"
+      },
+      {
+        "field": "skills",
+        "source": "workday"
+      },
+      {
+        "field": "skills",
+        "source": "workday"
+      },
+      {
+        "field": "skills",
+        "source": "greenhouse"
+      },
+      {
+        "field": "experience",
+        "source": "greenhouse"
+      }
+    ]
+  },
+  {
+    "candidate_id": "8e172b73-511c-442b-bc1b-cee98a6df51f",
+    "full_name": "Jane Smith",
+    "emails": [
+      "j.smith@example.org"
+    ],
+    "phones": [
+      "+912125559999"
+    ],
+    "skills": [
+      "Java",
+      "Aws",
+      "Spring Boot"
+    ],
+    "experience": [
+      {
+        "company": "Amazon",
+        "title": "SDE"
+      }
+    ],
+    "education": [
+      {
+        "school": "NYU",
+        "degree": "Masters"
+      }
+    ],
+    "links": {},
+    "overall_confidence": 0.9,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday"
+      },
+      {
+        "field": "email",
+        "source": "workday"
+      },
+      {
+        "field": "phone",
+        "source": "greenhouse"
+      },
+      {
+        "field": "skills",
+        "source": "workday"
+      },
+      {
+        "field": "skills",
+        "source": "workday"
+      },
+      {
+        "field": "skills",
+        "source": "greenhouse"
+      },
+      {
+        "field": "experience",
+        "source": "workday"
+      },
+      {
+        "field": "education",
+        "source": "greenhouse"
+      }
+    ]
+  },
+  {
+    "candidate_id": "1cda87b8-d855-4bbe-939f-03669081bc63",
+    "full_name": "Bob Wilson",
+    "emails": [
+      "bob.wilson@email.com"
+    ],
+    "phones": [
+      "+912125551234"
+    ],
+    "skills": [
+      "C++",
+      "Linux"
+    ],
+    "experience": [],
+    "education": [],
+    "links": {},
+    "overall_confidence": 0.8,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday"
+      },
+      {
+        "field": "email",
+        "source": "workday"
+      },
+      {
+        "field": "phone",
+        "source": "workday"
+      },
+      {
+        "field": "skills",
+        "source": "workday"
+      },
+      {
+        "field": "skills",
+        "source": "workday"
+      }
+    ]
+  },
+  {
+    "candidate_id": "726f6add-bebc-420b-b225-0dd2e9ace821",
+    "full_name": "Alice Johnson",
+    "emails": [
+      "alice.j@email.com"
+    ],
+    "phones": [],
+    "skills": [
+      "Python",
+      "React"
+    ],
+    "experience": [
+      {
+        "company": "Microsoft",
+        "title": "Software Engineer"
+      }
+    ],
+    "education": [
+      {
+        "school": "UW",
+        "degree": "BS"
+      }
+    ],
+    "links": {},
+    "overall_confidence": 0.8,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday"
+      },
+      {
+        "field": "email",
+        "source": "workday"
+      },
+      {
+        "field": "skills",
+        "source": "workday"
+      },
+      {
+        "field": "skills",
+        "source": "workday"
+      },
+      {
+        "field": "experience",
+        "source": "workday"
+      },
+      {
+        "field": "education",
+        "source": "workday"
+      }
+    ]
+  },
+  {
+    "candidate_id": "03e912d7-05e6-4dec-91b7-8aec1e02147e",
+    "full_name": "Ankit Nath",
+    "emails": [
+      "ankit@gmail.com"
+    ],
+    "phones": [
+      "+919876543210"
+    ],
+    "skills": [],
+    "experience": [
+      {
+        "company": "Tata Steel",
+        "title": "Software Engineer"
+      }
+    ],
+    "education": [],
+    "links": {},
+    "overall_confidence": 0.8,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday"
+      },
+      {
+        "field": "email",
+        "source": "workday"
+      },
+      {
+        "field": "phone",
+        "source": "workday"
+      },
+      {
+        "field": "experience",
+        "source": "workday"
+      }
+    ]
+  },
+  {
+    "candidate_id": "574372f8-0f57-4d1d-a931-e078bff81423",
+    "full_name": "Charlie Brown",
+    "emails": [
+      "charlie@email.com"
+    ],
+    "phones": [],
+    "skills": [
+      "Ruby"
+    ],
+    "experience": [],
+    "education": [],
+    "links": {},
+    "overall_confidence": 0.6,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "greenhouse"
+      },
+      {
+        "field": "email",
+        "source": "greenhouse"
+      },
+      {
+        "field": "skills",
+        "source": "greenhouse"
+      }
+    ]
+  },
+  {
+    "candidate_id": "780d5553-2c6d-4747-afd0-6c324fa3cd2e",
+    "full_name": "Ankit Nath",
+    "emails": [],
+    "phones": [],
+    "skills": [
+      "Python",
+      "Java",
+      "Spring Boot"
+    ],
+    "experience": [],
+    "education": [],
+    "links": {
+      "github": "https://github.com/ankit"
+    },
+    "overall_confidence": 0.5,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "GitHub"
+      },
+      {
+        "field": "skills",
+        "source": "GitHub"
+      },
+      {
+        "field": "skills",
+        "source": "GitHub"
+      },
+      {
+        "field": "skills",
+        "source": "GitHub"
+      },
+      {
+        "field": "links.github",
+        "source": "GitHub"
+      }
+    ]
+  },
+  {
+    "candidate_id": "8a2f6813-3050-4749-a45e-715e406129dc",
+    "full_name": "Ankit Nath",
+    "emails": [],
+    "phones": [],
+    "skills": [
+      "Python",
+      "Sql"
+    ],
+    "experience": [],
+    "education": [],
+    "links": {},
+    "overall_confidence": 0.5,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "Notes"
+      },
+      {
+        "field": "skills",
+        "source": "Notes"
+      },
+      {
+        "field": "skills",
+        "source": "Notes"
+      }
+    ]
+  }
+]

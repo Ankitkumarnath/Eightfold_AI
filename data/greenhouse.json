@@ -1,0 +1,44 @@
+[
+  {
+    "id": "G-5001",
+    "name": "Jonathan Doe",
+    "email": "john.doe@email.com",
+    "phone": "+1 415 555 0198",
+    "location": {
+      "city": "San Francisco",
+      "state": "CA",
+      "country": "US"
+    },
+    "skills": ["Python", "Machine Learning"],
+    "experience": [
+      {
+        "company": "Tech Corp",
+        "title": "Data Scientist",
+        "startDate": "2020-01-01"
+      }
+    ]
+  },
+  {
+    "id": "G-5002",
+    "first_name": "Jane",
+    "last_name": "Smith",
+    "email": "j.smith@example.org",
+    "phone": "212-555-9999",
+    "location": "New York, NY",
+    "skills": ["Java", "Spring Boot"],
+    "education": [
+      {
+        "school": "NYU",
+        "degree": "Masters"
+      }
+    ]
+  },
+  {
+    "id": "G-5005",
+    "first_name": "Charlie",
+    "last_name": "Brown",
+    "email": "charlie@email.com",
+    "location": "Chicago, IL",
+    "skills": ["Ruby"]
+  }
+]

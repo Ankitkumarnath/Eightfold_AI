@@ -1,0 +1,29 @@
+{
+    "active_profile": "full",
+    "profiles": {
+        "full": [
+            "candidate_id",
+            "full_name",
+            "emails",
+            "phones",
+            "headline",
+            "skills",
+            "experience",
+            "education",
+            "links",
+            "overall_confidence",
+            "provenance"
+        ],
+        "contact_only": [
+            "full_name",
+            "emails",
+            "phones"
+        ],
+        "recruiter_summary": [
+            "full_name",
+            "skills",
+            "experience",
+            "overall_confidence"
+        ]
+    }
+}

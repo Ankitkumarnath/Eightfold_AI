@@ -1,0 +1,6 @@
+Applicant ID,First Name,Last Name,Email,Phone,Location,Skills,Experience,Education
+W-1001,John,Doe,john.doe@email.com,415-555-0198,"San Francisco, CA, USA","Python, SQL",,
+W-1002,Jane,Smith,j.smith@example.org,,New York,"Java, AWS","[{""Company"": ""Amazon"", ""Title"": ""SDE""}]",
+W-1003,Bob,Wilson,bob.wilson@email.com,212-555-1234,"Austin, TX","C++, Linux",,
+W-1004,Alice,Johnson,alice.j@email.com,555-123-4567,"Seattle, WA","Python, React","[{""Company"": ""Microsoft"", ""Title"": ""Software Engineer""}]","[{""School"": ""UW"", ""Degree"": ""BS""}]"
+W-1005,Ankit,Nath,ankit@gmail.com,9876543210,"India","","[{""Company"": ""Tata Steel"", ""Title"": ""Software Engineer""}]",""

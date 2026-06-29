@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eightfold Candidate Resolution Engine</title>
+    <!-- Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+    <div class="background-gradient"></div>
+    
+    <div class="container">
+        <header>
+            <div class="logo">
+                <i class="fa-solid fa-layer-group"></i>
+                <h1>Eightfold Resolution Engine</h1>
+            </div>
+            <p>Upload your disparate ATS data sources to merge and resolve canonical candidate profiles.</p>
+        </header>
+
+        <div class="upload-section glass-panel">
+            <form id="uploadForm">
+                <div class="file-inputs">
+                    <div class="file-drop-area" id="workdayDrop">
+                        <i class="fa-solid fa-file-csv"></i>
+                        <span class="file-msg">Select Workday CSV</span>
+                        <input class="file-input" type="file" id="workday" accept=".csv">
+                    </div>
+                    
+                    <div class="file-drop-area" id="greenhouseDrop">
+                        <i class="fa-solid fa-file-code"></i>
+                        <span class="file-msg">Select Greenhouse JSON</span>
+                        <input class="file-input" type="file" id="greenhouse" accept=".json">
+                    </div>
+                    
+                    <div class="file-drop-area" id="resumeDrop">
+                        <i class="fa-solid fa-file-pdf"></i>
+                        <span class="file-msg">Optional PDF Resume</span>
+                        <input class="file-input" type="file" id="resume" accept=".pdf">
+                    </div>
+                    
+                    <div class="file-drop-area" id="githubDrop">
+                        <i class="fa-brands fa-github"></i>
+                        <span class="file-msg">Optional GitHub JSON</span>
+                        <input class="file-input" type="file" id="github" accept=".json">
+                    </div>
+                    
+                    <div class="file-drop-area" id="notesDrop">
+                        <i class="fa-solid fa-note-sticky"></i>
+                        <span class="file-msg">Optional Notes TXT</span>
+                        <input class="file-input" type="file" id="notes" accept=".txt">
+                    </div>
+                </div>
+                <button type="submit" id="submitBtn" class="btn-primary">
+                    <span>Resolve Candidates</span>
+                    <i class="fa-solid fa-arrow-right"></i>
+                </button>
+            </form>
+        </div>
+
+        <div id="loader" class="loader hidden">
+            <div class="spinner"></div>
+            <p>Resolving Entities...</p>
+        </div>
+
+        <div id="results" class="results-section hidden">
+            <h2><i class="fa-solid fa-users"></i> Canonical Profiles (<span id="count">0</span>)</h2>
+            <div id="candidatesList" class="candidates-grid">
+                <!-- Candidate Cards will be injected here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Provenance Modal -->
+    <div id="provenanceModal" class="modal hidden">
+        <div class="modal-content glass-panel">
+            <span class="close-btn">&times;</span>
+            <h2>Data Provenance</h2>
+            <pre id="provenanceData"></pre>
+        </div>
+    </div>
+
+    <script src="/static/script.js"></script>
+</body>
+</html>
