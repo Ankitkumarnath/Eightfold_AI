@@ -4,25 +4,37 @@ from pydantic import BaseModel, Field, EmailStr
 
 class Location(BaseModel):
     city: Optional[str] = None
-    state: Optional[str] = None
+    region: Optional[str] = None
     country: Optional[str] = None
 
 class Experience(BaseModel):
     company: str
     title: str
-    start_date: Optional[str] = None
-    end_date: Optional[str] = None
+    start: Optional[str] = None
+    end: Optional[str] = None
+    summary: Optional[str] = None
 
 class Education(BaseModel):
-    school: str
+    institution: str
     degree: Optional[str] = None
-    field_of_study: Optional[str] = None
-    start_date: Optional[str] = None
-    end_date: Optional[str] = None
+    field: Optional[str] = None
+    end_year: Optional[int] = None
 
 class FieldProvenance(BaseModel):
     field: str
     source: str
+    method: str
+
+class Skill(BaseModel):
+    name: str
+    confidence: float = 1.0
+    sources: List[str] = Field(default_factory=list)
+
+class Links(BaseModel):
+    linkedin: Optional[str] = None
+    github: Optional[str] = None
+    portfolio: Optional[str] = None
+    other: List[str] = Field(default_factory=list)
 
 class CandidateProfile(BaseModel):
     """
@@ -33,10 +45,11 @@ class CandidateProfile(BaseModel):
     emails: List[str] = Field(default_factory=list)
     phones: List[str] = Field(default_factory=list)
     headline: Optional[str] = None
-    skills: List[str] = Field(default_factory=list)
+    years_experience: Optional[float] = None
+    skills: List[Skill] = Field(default_factory=list)
     experience: List[Experience] = Field(default_factory=list)
     education: List[Education] = Field(default_factory=list)
-    links: Dict[str, str] = Field(default_factory=dict)
+    links: Links = Field(default_factory=Links)
     
     overall_confidence: float = 0.0
     provenance: List[FieldProvenance] = Field(default_factory=list)

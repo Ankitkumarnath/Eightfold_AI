@@ -1,6 +1,6 @@
 from typing import List, Dict, Any, Tuple
 from rapidfuzz import fuzz
-from domain.models import RawRecord, CandidateProfile, FieldProvenance, Experience, Education
+from domain.models import RawRecord, CandidateProfile, FieldProvenance, Experience, Education, Skill, Links
 from core.config import settings
 from confidence.calculator import ConfidenceCalculator
 
@@ -22,25 +22,25 @@ class MergeEngine:
                 return len(self.priority_list)
         return sorted(records, key=lambda r: get_priority_index(r.source_system))
 
-    def _merge_scalar_field(self, field_name: str, sorted_records: List[RawRecord]) -> Tuple[Any, FieldProvenance]:
+    def _merge_scalar_field(self, field_name: str, sorted_records: List[RawRecord], method="priority") -> Tuple[Any, FieldProvenance]:
         for record in sorted_records:
             val = getattr(record, field_name, None)
             if val is not None:
                 provenance = FieldProvenance(
                     field=field_name,
-                    source=record.source_system
+                    source=record.source_system,
+                    method=method
                 )
                 return val, provenance
         return None, None
 
-    def _merge_list_field(self, field_name: str, sorted_records: List[RawRecord]) -> Tuple[List[Any], List[FieldProvenance]]:
+    def _merge_list_field(self, field_name: str, sorted_records: List[RawRecord], method="deduplication") -> Tuple[List[Any], List[FieldProvenance]]:
         merged = []
         provs = []
         seen = set()
         for record in sorted_records:
             val = getattr(record, field_name, None)
             if val:
-                # Could be string or list
                 if isinstance(val, list):
                     items = val
                 else:
@@ -52,10 +52,26 @@ class MergeEngine:
                     if item_key not in seen:
                         seen.add(item_key)
                         merged.append(item)
-                        provs.append(FieldProvenance(field=field_name, source=record.source_system))
+                        provs.append(FieldProvenance(field=field_name, source=record.source_system, method=method))
         return merged, provs
 
-    def _merge_dict_field(self, field_name: str, sorted_records: List[RawRecord]) -> Tuple[Dict[str, Any], List[FieldProvenance]]:
+    def _merge_skills(self, sorted_records: List[RawRecord]) -> Tuple[List[Skill], List[FieldProvenance]]:
+        skill_map: Dict[str, Skill] = {}
+        provs = []
+        for record in sorted_records:
+            for skill_name in record.skills:
+                if not skill_name: continue
+                s_key = skill_name.lower().strip()
+                if s_key not in skill_map:
+                    skill_map[s_key] = Skill(name=skill_name, confidence=1.0, sources=[record.source_system])
+                    provs.append(FieldProvenance(field="skills", source=record.source_system, method="deduplication"))
+                else:
+                    if record.source_system not in skill_map[s_key].sources:
+                        skill_map[s_key].sources.append(record.source_system)
+                        skill_map[s_key].confidence = min(1.0, skill_map[s_key].confidence + 0.1)
+        return list(skill_map.values()), provs
+
+    def _merge_dict_field(self, field_name: str, sorted_records: List[RawRecord], method="priority") -> Tuple[Dict[str, Any], List[FieldProvenance]]:
         merged = {}
         provs = []
         # Lower priority to higher priority so higher overwrites
@@ -65,9 +81,8 @@ class MergeEngine:
                 for k, v in val.items():
                     if v:
                         merged[k] = v
-                        # Remove existing prov for this dict key to avoid dupes in provenance output
                         provs = [p for p in provs if not (p.field == f"{field_name}.{k}")]
-                        provs.append(FieldProvenance(field=f"{field_name}.{k}", source=record.source_system))
+                        provs.append(FieldProvenance(field=f"{field_name}.{k}", source=record.source_system, method=method))
         return merged, provs
 
     def _is_same_experience(self, exp1: Experience, exp2: Experience) -> bool:
@@ -82,11 +97,11 @@ class MergeEngine:
             for exp in record.experience:
                 if not any(self._is_same_experience(exp, existing) for existing in merged_exp):
                     merged_exp.append(exp)
-                    provs.append(FieldProvenance(field="experience", source=record.source_system))
+                    provs.append(FieldProvenance(field="experience", source=record.source_system, method="deduplication"))
         return merged_exp, provs
 
     def _is_same_education(self, edu1: Education, edu2: Education) -> bool:
-        school_match = fuzz.token_sort_ratio(edu1.school.lower(), edu2.school.lower()) > 85
+        school_match = fuzz.token_sort_ratio(edu1.institution.lower(), edu2.institution.lower()) > 85
         deg1 = edu1.degree or ""
         deg2 = edu2.degree or ""
         if deg1 and deg2:
@@ -100,8 +115,21 @@ class MergeEngine:
             for edu in record.education:
                 if not any(self._is_same_education(edu, existing) for existing in merged_edu):
                     merged_edu.append(edu)
-                    provs.append(FieldProvenance(field="education", source=record.source_system))
+                    provs.append(FieldProvenance(field="education", source=record.source_system, method="deduplication"))
         return merged_edu, provs
+        
+    def _calculate_years_experience(self, experiences: List[Experience]) -> float:
+        # Simplistic calculation based on start and end years (assuming YYYY-MM)
+        total_months = 0
+        for exp in experiences:
+            if exp.start and exp.end:
+                try:
+                    s_y, s_m = int(exp.start.split("-")[0]), int(exp.start.split("-")[1]) if "-" in exp.start else 1
+                    e_y, e_m = int(exp.end.split("-")[0]), int(exp.end.split("-")[1]) if "-" in exp.end else 1
+                    total_months += (e_y - s_y) * 12 + (e_m - s_m)
+                except:
+                    pass
+        return round(total_months / 12.0, 1) if total_months > 0 else None
 
     def merge(self, group: List[RawRecord]) -> CandidateProfile:
         if not group:
@@ -113,13 +141,12 @@ class MergeEngine:
         candidate = CandidateProfile(source_system=sources)
         all_provs = []
         
-        # 1. Full Name (from first_name/last_name or full_name)
-        # Try to get full_name from raw_data if we stored it there, or just build it.
+        # 1. Full Name
         name_val = None
         for record in sorted_records:
             if record.first_name or record.last_name:
                 name_val = f"{record.first_name or ''} {record.last_name or ''}".strip()
-                all_provs.append(FieldProvenance(field="full_name", source=record.source_system))
+                all_provs.append(FieldProvenance(field="full_name", source=record.source_system, method="priority"))
                 break
         candidate.full_name = name_val
         
@@ -140,13 +167,18 @@ class MergeEngine:
         all_provs.extend(provs)
         
         # 5. Skills
-        skills, provs = self._merge_list_field("skills", sorted_records)
+        skills, provs = self._merge_skills(sorted_records)
         candidate.skills = skills
         all_provs.extend(provs)
         
         # 6. Experience & Education
         exp, provs = self._merge_experience(sorted_records)
         candidate.experience = exp
+        if exp:
+            yoe = self._calculate_years_experience(exp)
+            if yoe is not None:
+                candidate.years_experience = yoe
+                all_provs.append(FieldProvenance(field="years_experience", source="computed", method="derived"))
         all_provs.extend(provs)
         
         edu, provs = self._merge_education(sorted_records)
@@ -154,14 +186,25 @@ class MergeEngine:
         all_provs.extend(provs)
         
         # 7. Links
-        links, provs = self._merge_dict_field("links", sorted_records)
-        candidate.links = links
+        raw_links, provs = self._merge_dict_field("links", sorted_records)
+        links_obj = Links()
+        for k, v in raw_links.items():
+            k_lower = k.lower()
+            if "linkedin" in k_lower:
+                links_obj.linkedin = v
+            elif "github" in k_lower:
+                links_obj.github = v
+            elif "portfolio" in k_lower:
+                links_obj.portfolio = v
+            else:
+                links_obj.other.append(v)
+        candidate.links = links_obj
         all_provs.extend(provs)
         
         # Combine Provenance
         candidate.provenance = all_provs
         
-        # Confidence Score (simplified based on number of sources matching)
+        # Confidence Score
         candidate.overall_confidence = self.confidence_calc.calculate(
             primary_source=sorted_records[0].source_system,
             source_count=len(sources),

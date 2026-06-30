@@ -4,7 +4,7 @@ from parsers.workday import WorkdayParser
 from parsers.greenhouse import GreenhouseParser
 from matching.engine import EntityResolutionEngine
 from merging.engine import MergeEngine
-from core.projection import ProjectionEngine
+from core.projection import ProjectionEngine, ProjectionError
 from core.logger import logger
 from domain.models import CandidateProfile
 
@@ -19,7 +19,7 @@ class ResolutionPipeline:
         self.matching_engine = EntityResolutionEngine()
         self.merge_engine = MergeEngine()
 
-    def run(self, workday_csv: str, greenhouse_json: str, resume_pdf: Optional[str] = None, github_json: Optional[str] = None, notes_txt: Optional[str] = None, output_path: Optional[str] = None, include_provenance: bool = True) -> List[Dict[str, Any]]:
+    def run(self, workday_csv: str, greenhouse_json: str, config_path: str = "config/schema.json", resume_pdf: Optional[str] = None, github_json: Optional[str] = None, notes_txt: Optional[str] = None, output_path: Optional[str] = None, include_provenance: bool = True) -> List[Dict[str, Any]]:
         """
         Executes the full pipeline: Parse -> Match -> Merge -> Dump
         """
@@ -70,11 +70,14 @@ class ResolutionPipeline:
                 logger.error(f"Failed to merge candidate group {i}: {e}")
                 
         # 4. Projection and Output
-        logger.info("Projecting final output based on schema configuration...")
-        projector = ProjectionEngine()
+        logger.info(f"Projecting final output based on schema configuration from {config_path}...")
+        projector = ProjectionEngine(config_path=config_path)
         final_output = []
         for profile in canonical_candidates:
-            final_output.append(projector.project(profile, include_provenance=include_provenance))
+            try:
+                final_output.append(projector.project(profile, include_provenance=include_provenance))
+            except ProjectionError as e:
+                logger.error(f"Failed to project candidate {profile.candidate_id}: {e}")
         
         if output_path:
             logger.info(f"Projecting output to {output_path}...")
@@ -96,6 +99,7 @@ if __name__ == "__main__":
     parser.add_argument("--github", required=False, help="Optional path to GitHub JSON file")
     parser.add_argument("--notes", required=False, help="Optional path to Notes TXT file")
     parser.add_argument("--output", required=True, help="Path to output JSON file")
+    parser.add_argument("--config", required=False, default="config/schema.json", help="Path to JSON configuration schema")
     parser.add_argument("--no-provenance", action="store_true", help="Omit provenance data from output")
     
     args = parser.parse_args()
@@ -112,6 +116,7 @@ if __name__ == "__main__":
     pipeline.run(
         workday_csv=args.workday,
         greenhouse_json=args.greenhouse,
+        config_path=args.config,
         resume_pdf=args.pdf,
         github_json=args.github,
         notes_txt=args.notes,

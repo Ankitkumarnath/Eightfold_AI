@@ -1,7 +1,8 @@
-import sys
+import traceback
 try:
-    import app
-    print("Successfully imported app")
+    from main import ResolutionPipeline
+    pipeline = ResolutionPipeline()
+    res = pipeline.run(workday_csv="data/workday.csv", greenhouse_json="data/greenhouse.json", config_path="config/schema.json", output_path="data/new_output.json")
+    print("Done")
 except Exception as e:
-    import traceback
     traceback.print_exc()

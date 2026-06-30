@@ -16,10 +16,10 @@ def parse_location_string(loc_str: str) -> Location:
         loc.city = parts[0]
     elif len(parts) == 2:
         loc.city = parts[0]
-        loc.state = parts[1]
-    elif len(parts) >= 3:
+        loc.region = parts[1]
+    elif len(parts) == 3:
         loc.city = parts[0]
-        loc.state = parts[1]
+        loc.region = parts[1]
         loc.country = parts[2]
         
     return loc
@@ -38,13 +38,13 @@ def normalize_location(raw_loc: Optional[Union[str, Dict[str, str]]]) -> Optiona
         
     if isinstance(raw_loc, dict):
         city = normalize_text(raw_loc.get("city") or raw_loc.get("City"))
-        state = normalize_text(raw_loc.get("state") or raw_loc.get("State"))
+        region = normalize_text(raw_loc.get("state") or raw_loc.get("region") or raw_loc.get("State") or raw_loc.get("Region"))
         country = normalize_text(raw_loc.get("country") or raw_loc.get("Country"))
         
-        if not (city or state or country):
+        if not (city or region or country):
             return None
             
-        return Location(city=city, state=state, country=country)
+        return Location(city=city, region=region, country=country)
         
     logger.debug(f"Unrecognized location format: {type(raw_loc)}")
     return None

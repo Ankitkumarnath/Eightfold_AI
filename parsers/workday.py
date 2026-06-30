@@ -48,10 +48,10 @@ class WorkdayParser(BaseParser):
                 
                 if company and title:
                     parsed_exps.append(Experience(
-                        company=normalize_text(company),
-                        title=normalize_text(title),
-                        start_date=normalize_date(exp.get("Start Date") or exp.get("start_date")),
-                        end_date=normalize_date(exp.get("End Date") or exp.get("end_date"))
+                        company=company,
+                        title=title,
+                        start=exp.get("start"),
+                        end=exp.get("end")
                     ))
             return parsed_exps
         except json.JSONDecodeError:
@@ -75,11 +75,10 @@ class WorkdayParser(BaseParser):
                 school = edu.get("School") or edu.get("school")
                 if school:
                     parsed_edus.append(Education(
-                        school=normalize_text(school),
+                        institution=normalize_text(school),
                         degree=normalize_text(edu.get("Degree") or edu.get("degree")),
-                        field_of_study=normalize_text(edu.get("Field of Study") or edu.get("field_of_study")),
-                        start_date=normalize_date(edu.get("Start Date") or edu.get("start_date")),
-                        end_date=normalize_date(edu.get("End Date") or edu.get("end_date"))
+                        field=normalize_text(edu.get("Field of Study") or edu.get("field_of_study")),
+                        end_year=int(str(edu.get("End Date") or edu.get("end_date")).split("-")[0]) if edu.get("End Date") or edu.get("end_date") else None
                     ))
             return parsed_edus
         except json.JSONDecodeError:

@@ -38,8 +38,8 @@ class GreenhouseParser(BaseParser):
                 parsed_exps.append(Experience(
                     company=normalize_text(company),
                     title=normalize_text(title),
-                    start_date=normalize_date(exp.get("start_date") or exp.get("startDate")),
-                    end_date=normalize_date(exp.get("end_date") or exp.get("endDate"))
+                    start=normalize_date(exp.get("start_date") or exp.get("startDate")),
+                    end=normalize_date(exp.get("end_date") or exp.get("endDate"))
                 ))
         return parsed_exps
 
@@ -53,12 +53,12 @@ class GreenhouseParser(BaseParser):
                 continue
             school = edu.get("school") or edu.get("institution")
             if school:
+                end_dt = str(normalize_date(edu.get("end_date") or edu.get("endDate")))
                 parsed_edus.append(Education(
-                    school=normalize_text(school),
+                    institution=normalize_text(school),
                     degree=normalize_text(edu.get("degree")),
-                    field_of_study=normalize_text(edu.get("field_of_study") or edu.get("major")),
-                    start_date=normalize_date(edu.get("start_date") or edu.get("startDate")),
-                    end_date=normalize_date(edu.get("end_date") or edu.get("endDate"))
+                    field=normalize_text(edu.get("field_of_study") or edu.get("major")),
+                    end_year=int(end_dt.split("-")[0]) if "-" in end_dt else None
                 ))
         return parsed_edus
 

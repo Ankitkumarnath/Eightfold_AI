@@ -54,11 +54,11 @@ def match_fuzzy_name_and_location(r1: RawRecord, r2: RawRecord) -> bool:
     if not loc1 or not loc2:
         return False
 
-    # Require at least city or state to match (not just country)
-    city_match  = loc1.city  and loc2.city  and loc1.city.lower()  == loc2.city.lower()
-    state_match = loc1.state and loc2.state and loc1.state.lower() == loc2.state.lower()
+    city_match = loc1.city and loc2.city and loc1.city.lower() == loc2.city.lower()
+    region_match = loc1.region and loc2.region and loc1.region.lower() == loc2.region.lower()
+    country_match = loc1.country and loc2.country and loc1.country.lower() == loc2.country.lower()
 
-    if not (city_match or state_match):
+    if not (city_match or region_match or country_match):
         return False
 
     n1, n2 = _full_name(r1), _full_name(r2)

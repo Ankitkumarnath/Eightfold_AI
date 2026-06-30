@@ -1,0 +1,242 @@
+[
+  {
+    "full_name": "John Doe",
+    "primary_email": "john.doe@email.com",
+    "phone": "+914155550198",
+    "skills": [
+      "Python",
+      "Sql",
+      "Machine Learning"
+    ],
+    "overall_confidence": 0.8500000000000001,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday",
+        "method": "priority"
+      },
+      {
+        "field": "email",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "phone",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "phone",
+        "source": "greenhouse",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "greenhouse",
+        "method": "deduplication"
+      },
+      {
+        "field": "experience",
+        "source": "greenhouse",
+        "method": "deduplication"
+      }
+    ]
+  },
+  {
+    "full_name": "Jane Smith",
+    "primary_email": "j.smith@example.org",
+    "phone": "+912125559999",
+    "skills": [
+      "Java",
+      "Aws",
+      "Spring Boot"
+    ],
+    "overall_confidence": 0.8500000000000001,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday",
+        "method": "priority"
+      },
+      {
+        "field": "email",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "phone",
+        "source": "greenhouse",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "greenhouse",
+        "method": "deduplication"
+      },
+      {
+        "field": "experience",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "education",
+        "source": "greenhouse",
+        "method": "deduplication"
+      }
+    ]
+  },
+  {
+    "full_name": "Bob Wilson",
+    "primary_email": "bob.wilson@email.com",
+    "phone": "+912125551234",
+    "skills": [
+      "C++",
+      "Linux"
+    ],
+    "overall_confidence": 0.8,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday",
+        "method": "priority"
+      },
+      {
+        "field": "email",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "phone",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      }
+    ]
+  },
+  {
+    "full_name": "Alice Johnson",
+    "primary_email": "alice.j@email.com",
+    "phone": null,
+    "skills": [
+      "Python",
+      "React"
+    ],
+    "overall_confidence": 0.8,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday",
+        "method": "priority"
+      },
+      {
+        "field": "email",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "experience",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "education",
+        "source": "workday",
+        "method": "deduplication"
+      }
+    ]
+  },
+  {
+    "full_name": "Ankit Nath",
+    "primary_email": "ankit@gmail.com",
+    "phone": "+919876543210",
+    "skills": null,
+    "overall_confidence": 0.8,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday",
+        "method": "priority"
+      },
+      {
+        "field": "email",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "phone",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "experience",
+        "source": "workday",
+        "method": "deduplication"
+      }
+    ]
+  },
+  {
+    "full_name": "Charlie Brown",
+    "primary_email": "charlie@email.com",
+    "phone": null,
+    "skills": [
+      "Ruby"
+    ],
+    "overall_confidence": 0.7,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "greenhouse",
+        "method": "priority"
+      },
+      {
+        "field": "email",
+        "source": "greenhouse",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "greenhouse",
+        "method": "deduplication"
+      }
+    ]
+  }
+]
