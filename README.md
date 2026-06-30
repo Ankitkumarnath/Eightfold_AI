@@ -41,7 +41,7 @@ pip install -r requirements.txt
 # 2. Run the FastAPI Application Server
 python app.py
 ```
-Open **[http://localhost:8080](http://localhost:8080)** in your browser to interact with the system.
+Open **[http://localhost:8080](http://0.0.0.0:8080)** in your browser to interact with the system.
 
 ## 🛠 Command Line Usage (Headless)
 
