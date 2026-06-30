@@ -330,6 +330,140 @@ pre {
     margin-top: 1rem;
 }
 
+/* ─── Section Blocks ─────────────────────────────────────────────────── */
+.section-block {
+    margin-top: 1rem;
+    padding-top: 0.75rem;
+    border-top: 1px solid var(--border-color);
+}
+
+.section-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.schema-note {
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    color: rgba(148, 163, 184, 0.6);
+    font-style: italic;
+}
+
+.candidate-headline {
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-top: 0.2rem;
+    font-style: italic;
+}
+
+/* ─── Data Tables ────────────────────────────────────────────────────── */
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.78rem;
+    margin-top: 0.4rem;
+}
+
+.data-table th {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-secondary);
+    font-weight: 600;
+    padding: 0.6rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+    font-size: 0.72rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.data-table td {
+    padding: 0.5rem 0.8rem;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--text-primary);
+    word-break: normal;
+    word-wrap: break-word;
+}
+
+.data-table tr:last-child td { border-bottom: none; }
+
+.data-table .type-row td {
+    color: rgba(148, 163, 184, 0.7);
+    font-size: 0.72rem;
+    font-style: italic;
+    background: rgba(255,255,255,0.02);
+}
+
+.data-table .note-row td {
+    color: rgba(148, 163, 184, 0.5);
+    font-size: 0.68rem;
+    font-style: italic;
+    background: rgba(255,255,255,0.01);
+    padding-bottom: 0.5rem;
+}
+
+.data-table code {
+    background: rgba(59, 130, 246, 0.15);
+    color: #93c5fd;
+    padding: 0.1rem 0.3rem;
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-family: monospace;
+}
+
+/* ─── Provenance Block ───────────────────────────────────────────────── */
+.provenance-block {
+    animation: fadeIn 0.3s ease;
+}
+
+.prov-table tbody tr:nth-child(odd) {
+    background: rgba(255, 255, 255, 0.02);
+}
+
+/* ─── Links Row ──────────────────────────────────────────────────────── */
+.links-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin-top: 0.3rem;
+}
+
+.link-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.75rem;
+    padding: 0.25rem 0.6rem;
+    border-radius: 20px;
+    background: rgba(59, 130, 246, 0.15);
+    border: 1px solid rgba(59, 130, 246, 0.3);
+    color: #93c5fd;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+
+.link-chip:hover {
+    background: rgba(59, 130, 246, 0.3);
+    border-color: rgba(59, 130, 246, 0.6);
+}
+
+/* ─── Candidate Cards (expanded) ─────────────────────────────────────── */
+.candidate-card {
+    max-width: 900px;
+    width: 100%;
+}
+
+.card-body {
+    padding: 0 0 0.5rem 0;
+}
+
 /* Animations */
 @keyframes fadeInDown {
     from { opacity: 0; transform: translateY(-20px); }

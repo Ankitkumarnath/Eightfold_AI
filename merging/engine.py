@@ -15,12 +15,11 @@ class MergeEngine:
         self.confidence_calc = ConfidenceCalculator()
         
     def _sort_records_by_priority(self, records: List[RawRecord]) -> List[RawRecord]:
-        def get_priority_index(source: str) -> int:
-            try:
-                return self.priority_list.index(source.lower())
-            except ValueError:
-                return len(self.priority_list)
-        return sorted(records, key=lambda r: get_priority_index(r.source_system))
+        def get_confidence_weight(source: str) -> float:
+            # Look up base confidence; default to 0.1 for unknown sources
+            return settings.CONFIDENCE_BASE_WEIGHTS.get(source.lower(), 0.1)
+        # Sort descending by confidence so highest confidence is first
+        return sorted(records, key=lambda r: get_confidence_weight(r.source_system), reverse=True)
 
     def _merge_scalar_field(self, field_name: str, sorted_records: List[RawRecord], method="priority") -> Tuple[Any, FieldProvenance]:
         for record in sorted_records:
@@ -63,7 +62,8 @@ class MergeEngine:
                 if not skill_name: continue
                 s_key = skill_name.lower().strip()
                 if s_key not in skill_map:
-                    skill_map[s_key] = Skill(name=skill_name, confidence=1.0, sources=[record.source_system])
+                    # Initialize with the properly cased name from the first source we see
+                    skill_map[s_key] = Skill(name=skill_name.strip().title(), confidence=1.0, sources=[record.source_system])
                     provs.append(FieldProvenance(field="skills", source=record.source_system, method="deduplication"))
                 else:
                     if record.source_system not in skill_map[s_key].sources:
@@ -120,13 +120,22 @@ class MergeEngine:
         
     def _calculate_years_experience(self, experiences: List[Experience]) -> float:
         # Simplistic calculation based on start and end years (assuming YYYY-MM)
+        from datetime import datetime
+        now = datetime.now()
         total_months = 0
         for exp in experiences:
-            if exp.start and exp.end:
+            if exp.start:
                 try:
                     s_y, s_m = int(exp.start.split("-")[0]), int(exp.start.split("-")[1]) if "-" in exp.start else 1
-                    e_y, e_m = int(exp.end.split("-")[0]), int(exp.end.split("-")[1]) if "-" in exp.end else 1
-                    total_months += (e_y - s_y) * 12 + (e_m - s_m)
+                    
+                    if exp.end:
+                        e_y, e_m = int(exp.end.split("-")[0]), int(exp.end.split("-")[1]) if "-" in exp.end else 1
+                    else:
+                        e_y, e_m = now.year, now.month
+                        
+                    months = (e_y - s_y) * 12 + (e_m - s_m)
+                    if months > 0:
+                        total_months += months
                 except:
                     pass
         return round(total_months / 12.0, 1) if total_months > 0 else None
@@ -174,18 +183,30 @@ class MergeEngine:
         # 6. Experience & Education
         exp, provs = self._merge_experience(sorted_records)
         candidate.experience = exp
-        if exp:
+        # years_experience: prefer explicitly extracted value, fall back to computed
+        yoe = None
+        for record in sorted_records:
+            if record.years_experience and record.years_experience > 0:
+                yoe = record.years_experience
+                all_provs.append(FieldProvenance(field="years_experience", source=record.source_system, method="extracted"))
+                break
+        if yoe is None and exp:
             yoe = self._calculate_years_experience(exp)
-            if yoe is not None:
-                candidate.years_experience = yoe
+            if yoe:
                 all_provs.append(FieldProvenance(field="years_experience", source="computed", method="derived"))
+        candidate.years_experience = yoe
         all_provs.extend(provs)
         
         edu, provs = self._merge_education(sorted_records)
         candidate.education = edu
         all_provs.extend(provs)
         
-        # 7. Links
+        # 7. Location
+        location_val, loc_prov = self._merge_scalar_field("location", sorted_records)
+        if location_val:
+            candidate.location = location_val
+            if loc_prov:
+                all_provs.append(loc_prov)
         raw_links, provs = self._merge_dict_field("links", sorted_records)
         links_obj = Links()
         for k, v in raw_links.items():

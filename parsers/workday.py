@@ -48,8 +48,8 @@ class WorkdayParser(BaseParser):
                 
                 if company and title:
                     parsed_exps.append(Experience(
-                        company=company,
-                        title=title,
+                        company=normalize_text(company),
+                        title=normalize_text(title),
                         start=exp.get("start"),
                         end=exp.get("end")
                     ))

@@ -44,6 +44,7 @@ class CandidateProfile(BaseModel):
     full_name: Optional[str] = None
     emails: List[str] = Field(default_factory=list)
     phones: List[str] = Field(default_factory=list)
+    location: Optional[Location] = None
     headline: Optional[str] = None
     years_experience: Optional[float] = None
     skills: List[Skill] = Field(default_factory=list)
@@ -67,6 +68,8 @@ class RawRecord(BaseModel):
     last_name: Optional[str] = None
     email: Optional[str] = None
     phone: Optional[str] = None
+    headline: Optional[str] = None
+    years_experience: Optional[float] = None
     location: Optional[Location] = None
     skills: List[str] = Field(default_factory=list)
     experience: List[Experience] = Field(default_factory=list)

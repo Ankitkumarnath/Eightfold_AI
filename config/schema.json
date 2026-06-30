@@ -1,9 +1,17 @@
 {
   "fields": [
+    { "path": "candidate_id", "type": "string", "required": true },
     { "path": "full_name", "type": "string", "required": true },
-    { "path": "primary_email", "from": "emails[0]", "type": "string", "required": true },
-    { "path": "phone", "from": "phones[0]", "type": "string", "normalize": "E164" },
-    { "path": "skills", "from": "skills[].name", "type": "string[]", "normalize": "canonical" }
+    { "path": "emails", "from": "emails", "type": "string[]" },
+    { "path": "phones", "from": "phones", "type": "string[]", "normalize": "E164" },
+    { "path": "location", "from": "location", "type": "object" },
+    { "path": "links", "from": "links", "type": "object" },
+    { "path": "headline", "from": "headline", "type": "string" },
+    { "path": "years_experience", "from": "years_experience", "type": "number" },
+    { "path": "skills", "from": "skills", "type": "object[]" },
+    { "path": "experience", "from": "experience", "type": "object[]" },
+    { "path": "education", "from": "education", "type": "object[]" },
+    { "path": "overall_confidence", "from": "overall_confidence", "type": "number" }
   ],
   "include_confidence": true,
   "on_missing": "null"

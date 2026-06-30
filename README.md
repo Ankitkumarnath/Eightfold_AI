@@ -8,12 +8,13 @@ Built as a realistic backend system focused on extensibility, clean architecture
 
 ## 🎯 Key Features & Requirements Met
 
-- **Multi-Source Parsing**: Extractors designed for Workday (CSV), Greenhouse (JSON), PDF Resumes, GitHub (JSON), and Recruiter Notes (TXT).
+- **Multi-Source Parsing**: Extractors designed for Workday (CSV), Greenhouse (JSON), PDF Resumes (`pdfplumber` backed for complex two-column layouts), GitHub (JSON profiles and repos), and Recruiter Notes (TXT).
 - **Entity Resolution Engine**: Deterministically identifies records belonging to the same candidate across data sources using fuzzy matching and exact matches.
 - **Conflict Resolution & Merging**: Priority-based resolution merges conflicting scalar fields (e.g., Resume > CSV), while safely union-ing array fields (like Skills).
 - **Smart Normalizations**: 
   - Validates and standardizes Phone Numbers to strict E.164 format (e.g., handles `9876543210` -> `+919876543210`).
   - Standardizes raw skills (e.g., `Python3` -> `Python`).
+  - Gracefully extracts `City, State` from messy ATS/PDF text blocks.
 - **Data Provenance Tracking**: Tracks the origin of every single field using a strict flat array format as required.
 - **Dynamic Schema Configuration**: Implements a `ProjectionEngine` that reads `config/schema.json` to dynamically output only the fields a recruiter wants without modifying any python code.
 - **Confidence Scoring**: Dynamically calculates a confidence score based on multi-source corroboration and data conflicts.
@@ -31,14 +32,14 @@ The pipeline is designed following SOLID principles and cleanly decoupled domain
 
 ## 🚀 How to Run
 
-A lightweight, zero-dependency Python server is included to test the pipeline visually.
+A modern web UI is included to test the pipeline visually.
 
 ```bash
-# 1. Activate Virtual Environment
-source venv/bin/activate
+# 1. Install dependencies
+pip install -r requirements.txt
 
-# 2. Run the simple UI Server
-python server.py
+# 2. Run the FastAPI Application Server
+python app.py
 ```
 Open **[http://localhost:8080](http://localhost:8080)** in your browser to interact with the system.
 

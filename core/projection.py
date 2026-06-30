@@ -115,13 +115,21 @@ class ProjectionEngine:
             
         projected = {}
         
+        # Always include candidate_id
+        projected["candidate_id"] = data.get("candidate_id")
+        
         for field_def in self.fields:
             target_path = field_def.get("path")
             source_path = field_def.get("from", target_path)
             is_required = field_def.get("required", False)
             norm_key = field_def.get("normalize")
+            field_type = field_def.get("type", "string")
             
-            val = self._extract_value(data, source_path)
+            # For simple flat keys with no array/dot notation, do a direct dict lookup
+            if "[" not in source_path and "." not in source_path:
+                val = data.get(source_path)
+            else:
+                val = self._extract_value(data, source_path)
             
             # Normalization
             if val is not None and norm_key:
@@ -133,13 +141,6 @@ class ProjectionEngine:
             if is_missing:
                 if is_required and self.on_missing == "error":
                     raise ProjectionError(f"Required field missing: {target_path}")
-                elif self.on_missing == "error":
-                    # Only raise for required fields, but if it says "error" globally...
-                    # Let's assume on_missing=error applies strictly to missing values
-                    # if they are specified in the config, unless it's explicitly not required?
-                    # The prompt implies "Choose what to do when a value is missing". 
-                    # If it's missing and strategy is error, we error.
-                    raise ProjectionError(f"Field missing and on_missing is error: {target_path}")
                 elif self.on_missing == "omit":
                     continue
                 else:

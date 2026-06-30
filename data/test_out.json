@@ -1,0 +1,537 @@
+[
+  {
+    "candidate_id": "bbbda88c-a85b-4c7b-94c4-73249d034ed9",
+    "full_name": "Jonathan Doe",
+    "emails": [
+      "john.doe@email.com"
+    ],
+    "phones": [
+      "+14155550198",
+      "+914155550198"
+    ],
+    "location": {
+      "city": "Python",
+      "region": "Machine",
+      "country": "IN"
+    },
+    "links": {
+      "other": []
+    },
+    "headline": "Software Engineer | Data Scientist",
+    "years_experience": 6.4,
+    "skills": [
+      {
+        "name": "Aws",
+        "confidence": 1.0,
+        "sources": [
+          "resume_pdf"
+        ]
+      },
+      {
+        "name": "Machine Learning",
+        "confidence": 1.0,
+        "sources": [
+          "resume_pdf",
+          "greenhouse"
+        ]
+      },
+      {
+        "name": "Python",
+        "confidence": 1.0,
+        "sources": [
+          "resume_pdf",
+          "workday",
+          "greenhouse"
+        ]
+      },
+      {
+        "name": "React",
+        "confidence": 1.0,
+        "sources": [
+          "resume_pdf"
+        ]
+      },
+      {
+        "name": "Sql",
+        "confidence": 1.0,
+        "sources": [
+          "resume_pdf",
+          "workday"
+        ]
+      }
+    ],
+    "experience": [
+      {
+        "company": "Tech Corp",
+        "title": "Data Scientist",
+        "start": "2020-01-01"
+      }
+    ],
+    "education": null,
+    "overall_confidence": 0.95,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "resume_pdf",
+        "method": "priority"
+      },
+      {
+        "field": "headline",
+        "source": "resume_pdf",
+        "method": "priority"
+      },
+      {
+        "field": "email",
+        "source": "resume_pdf",
+        "method": "deduplication"
+      },
+      {
+        "field": "phone",
+        "source": "resume_pdf",
+        "method": "deduplication"
+      },
+      {
+        "field": "phone",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "resume_pdf",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "resume_pdf",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "resume_pdf",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "resume_pdf",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "resume_pdf",
+        "method": "deduplication"
+      },
+      {
+        "field": "years_experience",
+        "source": "computed",
+        "method": "derived"
+      },
+      {
+        "field": "experience",
+        "source": "greenhouse",
+        "method": "deduplication"
+      },
+      {
+        "field": "location",
+        "source": "resume_pdf",
+        "method": "priority"
+      }
+    ]
+  },
+  {
+    "candidate_id": "1208c2ab-0078-42b2-8976-2c536ea573a6",
+    "full_name": "Jane Smith",
+    "emails": [
+      "j.smith@example.org"
+    ],
+    "phones": [
+      "+912125559999"
+    ],
+    "location": {
+      "city": "New York"
+    },
+    "links": {
+      "other": []
+    },
+    "headline": null,
+    "years_experience": null,
+    "skills": [
+      {
+        "name": "Java",
+        "confidence": 1.0,
+        "sources": [
+          "workday",
+          "greenhouse"
+        ]
+      },
+      {
+        "name": "Aws",
+        "confidence": 1.0,
+        "sources": [
+          "workday"
+        ]
+      },
+      {
+        "name": "Spring Boot",
+        "confidence": 1.0,
+        "sources": [
+          "greenhouse"
+        ]
+      }
+    ],
+    "experience": [
+      {
+        "company": "Amazon",
+        "title": "SDE"
+      }
+    ],
+    "education": [
+      {
+        "institution": "NYU",
+        "degree": "Masters"
+      }
+    ],
+    "overall_confidence": 0.8500000000000001,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday",
+        "method": "priority"
+      },
+      {
+        "field": "email",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "phone",
+        "source": "greenhouse",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "greenhouse",
+        "method": "deduplication"
+      },
+      {
+        "field": "experience",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "education",
+        "source": "greenhouse",
+        "method": "deduplication"
+      },
+      {
+        "field": "location",
+        "source": "workday",
+        "method": "priority"
+      }
+    ]
+  },
+  {
+    "candidate_id": "8fce6d58-3ee1-4512-84d7-640b55d4f443",
+    "full_name": "Bob Wilson",
+    "emails": [
+      "bob.wilson@email.com"
+    ],
+    "phones": [
+      "+912125551234"
+    ],
+    "location": {
+      "city": "Austin",
+      "region": "TX"
+    },
+    "links": {
+      "other": []
+    },
+    "headline": null,
+    "years_experience": null,
+    "skills": [
+      {
+        "name": "C++",
+        "confidence": 1.0,
+        "sources": [
+          "workday"
+        ]
+      },
+      {
+        "name": "Linux",
+        "confidence": 1.0,
+        "sources": [
+          "workday"
+        ]
+      }
+    ],
+    "experience": null,
+    "education": null,
+    "overall_confidence": 0.8,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday",
+        "method": "priority"
+      },
+      {
+        "field": "email",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "phone",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "location",
+        "source": "workday",
+        "method": "priority"
+      }
+    ]
+  },
+  {
+    "candidate_id": "d9cb2b3b-d5b6-4420-a0a8-8bca2cdc4946",
+    "full_name": "Alice Johnson",
+    "emails": [
+      "alice.j@email.com"
+    ],
+    "phones": null,
+    "location": {
+      "city": "Seattle",
+      "region": "WA"
+    },
+    "links": {
+      "other": []
+    },
+    "headline": null,
+    "years_experience": null,
+    "skills": [
+      {
+        "name": "Python",
+        "confidence": 1.0,
+        "sources": [
+          "workday"
+        ]
+      },
+      {
+        "name": "React",
+        "confidence": 1.0,
+        "sources": [
+          "workday"
+        ]
+      }
+    ],
+    "experience": [
+      {
+        "company": "Microsoft",
+        "title": "Software Engineer"
+      }
+    ],
+    "education": [
+      {
+        "institution": "UW",
+        "degree": "BS"
+      }
+    ],
+    "overall_confidence": 0.8,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday",
+        "method": "priority"
+      },
+      {
+        "field": "email",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "experience",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "education",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "location",
+        "source": "workday",
+        "method": "priority"
+      }
+    ]
+  },
+  {
+    "candidate_id": "41c8fd05-7469-418b-9e0c-6f95aef8634c",
+    "full_name": "Ankit Nath",
+    "emails": [
+      "ankit@gmail.com"
+    ],
+    "phones": [
+      "+919876543210"
+    ],
+    "location": {
+      "city": "India"
+    },
+    "links": {
+      "other": []
+    },
+    "headline": null,
+    "years_experience": null,
+    "skills": [
+      {
+        "name": "Python",
+        "confidence": 1.0,
+        "sources": [
+          "github"
+        ]
+      },
+      {
+        "name": "Java",
+        "confidence": 1.0,
+        "sources": [
+          "github"
+        ]
+      },
+      {
+        "name": "Spring Boot",
+        "confidence": 1.0,
+        "sources": [
+          "github"
+        ]
+      }
+    ],
+    "experience": [
+      {
+        "company": "Tata Steel",
+        "title": "Software Engineer"
+      }
+    ],
+    "education": null,
+    "overall_confidence": 0.8500000000000001,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "workday",
+        "method": "priority"
+      },
+      {
+        "field": "email",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "phone",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "github",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "github",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "github",
+        "method": "deduplication"
+      },
+      {
+        "field": "experience",
+        "source": "workday",
+        "method": "deduplication"
+      },
+      {
+        "field": "location",
+        "source": "workday",
+        "method": "priority"
+      }
+    ]
+  },
+  {
+    "candidate_id": "7f2cb73e-4f96-4198-b797-10be6ae35aad",
+    "full_name": "Charlie Brown",
+    "emails": [
+      "charlie@email.com"
+    ],
+    "phones": null,
+    "location": {
+      "city": "Chicago",
+      "region": "IL"
+    },
+    "links": {
+      "other": []
+    },
+    "headline": null,
+    "years_experience": null,
+    "skills": [
+      {
+        "name": "Ruby",
+        "confidence": 1.0,
+        "sources": [
+          "greenhouse"
+        ]
+      }
+    ],
+    "experience": null,
+    "education": null,
+    "overall_confidence": 0.7,
+    "provenance": [
+      {
+        "field": "full_name",
+        "source": "greenhouse",
+        "method": "priority"
+      },
+      {
+        "field": "email",
+        "source": "greenhouse",
+        "method": "deduplication"
+      },
+      {
+        "field": "skills",
+        "source": "greenhouse",
+        "method": "deduplication"
+      },
+      {
+        "field": "location",
+        "source": "greenhouse",
+        "method": "priority"
+      }
+    ]
+  }
+]

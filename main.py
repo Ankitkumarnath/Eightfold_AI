@@ -27,13 +27,15 @@ class ResolutionPipeline:
         all_records = []
         
         # 1. Parsing
-        logger.info(f"Parsing Workday data from {workday_csv}...")
-        for record in self.workday_parser.parse(workday_csv):
-            all_records.append(record)
+        if workday_csv:
+            logger.info(f"Parsing Workday data from {workday_csv}...")
+            for record in self.workday_parser.parse(workday_csv):
+                all_records.append(record)
             
-        logger.info(f"Parsing Greenhouse data from {greenhouse_json}...")
-        for record in self.greenhouse_parser.parse(greenhouse_json):
-            all_records.append(record)
+        if greenhouse_json:
+            logger.info(f"Parsing Greenhouse data from {greenhouse_json}...")
+            for record in self.greenhouse_parser.parse(greenhouse_json):
+                all_records.append(record)
             
         if resume_pdf:
             logger.info(f"Parsing PDF Resume from {resume_pdf}...")

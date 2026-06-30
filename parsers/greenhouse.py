@@ -84,9 +84,12 @@ class GreenhouseParser(BaseParser):
                         first_name = record.get("first_name")
                         last_name = record.get("last_name")
                         if not first_name and not last_name and record.get("name"):
-                            parts = record.get("name").split(" ", 1)
+                            parts = str(record.get("name")).split(" ", 1)
                             first_name = parts[0]
                             last_name = parts[1] if len(parts) > 1 else None
+                            
+                        first_name = normalize_text(first_name)
+                        last_name = normalize_text(last_name)
                             
                         original_id = str(record.get("id") or uuid.uuid4())
                             

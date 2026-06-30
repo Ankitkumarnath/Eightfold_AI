@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="/static/style.css">
+    <link rel="stylesheet" href="/static/style.css?v=6">
 </head>
 <body>
     <div class="background-gradient"></div>
@@ -55,6 +55,19 @@
                         <input class="file-input" type="file" id="notes" accept=".txt">
                     </div>
                 </div>
+                
+                <h3 style="margin-bottom: 1rem; color: var(--text-secondary); font-weight: 500;">Or Paste Live Profile URLs:</h3>
+                <div class="url-inputs" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
+                    <div class="input-group">
+                        <label for="github_url" style="color: var(--text-secondary);"><i class="fa-brands fa-github"></i> GitHub URL</label>
+                        <input type="text" id="github_url" name="github_url" placeholder="https://github.com/username" style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: white; border-radius: 8px; margin-top: 0.5rem; outline: none;">
+                    </div>
+                    <div class="input-group">
+                        <label for="greenhouse_url" style="color: var(--text-secondary);"><i class="fa-solid fa-file-code"></i> Greenhouse URL</label>
+                        <input type="text" id="greenhouse_url" name="greenhouse_url" placeholder="https://app.greenhouse.io/..." style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: white; border-radius: 8px; margin-top: 0.5rem; outline: none;">
+                    </div>
+                </div>
+                
                 <button type="submit" id="submitBtn" class="btn-primary">
                     <span>Resolve Candidates</span>
                     <i class="fa-solid fa-arrow-right"></i>
@@ -84,6 +97,6 @@
         </div>
     </div>
 
-    <script src="/static/script.js"></script>
+    <script src="/static/script.js?v=5"></script>
 </body>
 </html>
