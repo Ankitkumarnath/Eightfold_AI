@@ -50,8 +50,8 @@ class Settings:
     SOURCE_PRIORITY: List[str] = field(default_factory=lambda: [
         "resume_pdf",   # Candidate-authored — most trustworthy
         "linkedin",     # Public professional profile
-        "workday",      # HR system of record
-        "greenhouse",   # ATS import
+        "recruiter_csv",# HR system of record
+        "ats_json",     # ATS import
         "github",       # Inferred from public repo activity
         "notes",        # Recruiter free-text — most subjective
     ])
@@ -61,8 +61,8 @@ class Settings:
     CONFIDENCE_BASE_WEIGHTS: Dict[str, float] = field(default_factory=lambda: {
         "resume_pdf": 0.85,
         "linkedin":   0.90,
-        "workday":    0.80,
-        "greenhouse": 0.70,
+        "recruiter_csv": 0.80,
+        "ats_json":   0.70,
         "github":     0.60,
         "notes":      0.50,
     })

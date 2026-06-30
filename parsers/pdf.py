@@ -152,16 +152,7 @@ class PdfParser(BaseParser):
     # -----------------------------------------------------------------------
     def _extract_text(self, file_path: str) -> str:
         text = ""
-        try:
-            with pdfplumber.open(file_path) as pdf:
-                for page in pdf.pages:
-                    extracted = page.extract_text()
-                    if extracted:
-                        text += extracted + "\n"
-        except Exception as e:
-            logger.warning(f"pdfplumber failed: {e}")
-
-        # pypdf as fallback / supplement
+        # 1. Try pypdf first (incredibly fast)
         try:
             import pypdf
             with open(file_path, "rb") as f:
@@ -171,7 +162,20 @@ class PdfParser(BaseParser):
                     if extracted:
                         text += extracted + "\n"
         except Exception as e:
-            logger.error(f"pypdf failed: {e}")
+            logger.warning(f"pypdf failed: {e}")
+
+        # 2. If pypdf failed or extracted very little text, fallback to pdfplumber
+        if len(text.strip()) < 50:
+            text = "" # Reset
+            try:
+                import pdfplumber
+                with pdfplumber.open(file_path) as pdf:
+                    for page in pdf.pages:
+                        extracted = page.extract_text()
+                        if extracted:
+                            text += extracted + "\n"
+            except Exception as e:
+                logger.error(f"pdfplumber failed: {e}")
 
         logger.info(f"Raw extracted text (first 1000 chars):\n{text[:1000]!r}")
         return text

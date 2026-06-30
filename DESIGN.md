@@ -1,7 +1,7 @@
 # Design Document: Eightfold Candidate Resolution Engine
 
 ## Overview
-The Candidate Resolution Engine is designed to aggregate disparate candidate datasets from Application Tracking Systems (ATS) like Workday and Greenhouse into a singular, deduplicated, canonical source of truth.
+The Candidate Resolution Engine is designed to aggregate disparate candidate datasets from Application Tracking Systems (ATS) and Recruiter CRM exports into a singular, deduplicated, canonical source of truth.
 
 This document discusses the architectural choices, algorithms, trade-offs, and assumptions made during implementation.
 
@@ -34,8 +34,8 @@ The system adopts **Clean Architecture** to ensure maintainability, testing, and
 
 ## Merge Policy & Conflict Resolution
 We implement a **Priority-Based Merge Strategy**:
-- A strict configuration defines trust: `LinkedIn > Workday > Greenhouse`.
-- If Workday and Greenhouse both provide a `first_name`, the Workday value is retained.
+- A strict configuration defines trust: `LinkedIn > Recruiter CSV > ATS JSON`.
+- If Recruiter CSV and ATS JSON both provide a `first_name`, the Recruiter CSV value is retained.
 - If the highest priority source is missing a field, the engine gracefully falls back to the next available source in the priority list.
 
 **Lists (Skills, Experience, Education):**

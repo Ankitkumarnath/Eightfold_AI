@@ -6,7 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const countSpan = document.getElementById('count');
 
     // File drop zones UI logic
-    ['workday', 'greenhouse', 'resume'].forEach(id => {
+    ['recruiter', 'ats', 'resume', 'github', 'notes'].forEach(id => {
         const input = document.getElementById(id);
         const dropArea = document.getElementById(`${id}Drop`);
         const msg = dropArea.querySelector('.file-msg');
@@ -27,24 +27,29 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const wdFile = document.getElementById('workday').files[0];
-        const ghFile = document.getElementById('greenhouse').files[0];
+        const recFile = document.getElementById('recruiter').files[0];
+        const atsFile = document.getElementById('ats').files[0];
         const resFile = document.getElementById('resume').files[0];
 
         const ghUrl = document.getElementById('github_url').value.trim();
-        const grUrl = document.getElementById('greenhouse_url').value.trim();
+        const liUrl = document.getElementById('linkedin_url').value.trim();
+        const atsUrl = document.getElementById('ats_url').value.trim();
 
-        if (!wdFile && !ghFile && !resFile && !ghUrl && !grUrl) {
-            alert('Please select at least one file or provide a profile URL to resolve.');
+        const hasStructured = recFile || atsFile || atsUrl;
+        const hasUnstructured = resFile || ghUrl || liUrl;
+
+        if (!hasStructured || !hasUnstructured) {
+            alert('Assignment Requirement: Please provide at least one structured source (Recruiter CSV, ATS JSON, etc.) AND at least one unstructured source (Resume PDF, GitHub Profile).');
             return;
         }
 
         const formData = new FormData();
-        if (wdFile) formData.append('workday', wdFile);
-        if (ghFile) formData.append('greenhouse', ghFile);
+        if (recFile) formData.append('recruiter', recFile);
+        if (atsFile) formData.append('ats', atsFile);
         if (resFile) formData.append('resume', resFile);
         if (ghUrl) formData.append('github_url', ghUrl);
-        if (grUrl) formData.append('greenhouse_url', grUrl);
+        if (liUrl) formData.append('linkedin_url', liUrl);
+        if (atsUrl) formData.append('ats_url', atsUrl);
 
         form.parentElement.classList.add('hidden');
         results.classList.add('hidden');

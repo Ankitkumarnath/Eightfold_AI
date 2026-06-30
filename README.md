@@ -8,7 +8,7 @@ Built as a realistic backend system focused on extensibility, clean architecture
 
 ## 🎯 Key Features & Requirements Met
 
-- **Multi-Source Parsing**: Extractors designed for Workday (CSV), Greenhouse (JSON), PDF Resumes (`pdfplumber` backed for complex two-column layouts), GitHub (JSON profiles and repos), and Recruiter Notes (TXT).
+- **Multi-Source Parsing**: Extractors designed for Recruiter (CSV), ATS (JSON), PDF Resumes (`pypdf` backed for blazing fast text extraction with `pdfplumber` fallback), GitHub (JSON profiles and repos), LinkedIn (JSON), and Recruiter Notes (TXT).
 - **Entity Resolution Engine**: Deterministically identifies records belonging to the same candidate across data sources using fuzzy matching and exact matches.
 - **Conflict Resolution & Merging**: Priority-based resolution merges conflicting scalar fields (e.g., Resume > CSV), while safely union-ing array fields (like Skills).
 - **Smart Normalizations**: 
@@ -48,8 +48,8 @@ Open **[http://localhost:8080](http://0.0.0.0:8080)** in your browser to interac
 You can also run the core engine directly via the CLI:
 ```bash
 python main.py \
-    --workday data/workday.csv \
-    --greenhouse data/greenhouse.json \
+    --recruiter data/recruiter.csv \
+    --ats data/ats.json \
     --pdf data/resume.pdf \
     --github data/github.json \
     --notes data/notes.txt \

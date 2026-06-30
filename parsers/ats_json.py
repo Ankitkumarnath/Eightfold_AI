@@ -10,9 +10,9 @@ from normalizers.text import normalize_skill, normalize_text
 from normalizers.date import normalize_date
 from core.logger import logger
 
-class GreenhouseParser(BaseParser):
+class AtsJsonParser(BaseParser):
     def __init__(self):
-        super().__init__(source_name="greenhouse")
+        super().__init__(source_name="ats_json")
         
     def _parse_skills(self, skills_raw: Any) -> List[str]:
         if not skills_raw:

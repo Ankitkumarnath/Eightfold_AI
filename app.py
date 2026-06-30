@@ -20,34 +20,40 @@ async def read_index():
 
 @app.post("/api/resolve")
 async def resolve_candidates(
-    workday: UploadFile = File(None),
-    greenhouse: UploadFile = File(None),
+    recruiter: UploadFile = File(None),
+    ats: UploadFile = File(None),
     resume: UploadFile = File(None),
     github_url: str = Form(None),
-    greenhouse_url: str = Form(None)
+    linkedin_url: str = Form(None),
+    ats_url: str = Form(None)
 ):
-    if not workday and not greenhouse and not resume and not github_url and not greenhouse_url:
-        raise HTTPException(status_code=400, detail="At least one file or URL must be provided")
-    if workday and not workday.filename.endswith('.csv'):
-        raise HTTPException(status_code=400, detail="Workday file must be a CSV")
-    if greenhouse and not greenhouse.filename.endswith('.json'):
-        raise HTTPException(status_code=400, detail="Greenhouse file must be a JSON")
+    has_structured = recruiter is not None or ats is not None or ats_url is not None
+    has_unstructured = resume is not None or github_url is not None or linkedin_url is not None
+    if not (has_structured and has_unstructured):
+        raise HTTPException(
+            status_code=400, 
+            detail="Assignment requirement: You must provide at least one structured source (e.g., Recruiter CSV, ATS JSON) and at least one unstructured source (e.g., Resume PDF, GitHub profile)."
+        )
+    if recruiter and not recruiter.filename.endswith('.csv'):
+        raise HTTPException(status_code=400, detail="Recruiter file must be a CSV")
+    if ats and not ats.filename.endswith('.json'):
+        raise HTTPException(status_code=400, detail="ATS file must be a JSON")
     if resume and not resume.filename.endswith('.pdf'):
         raise HTTPException(status_code=400, detail="Resume file must be a PDF")
         
     try:
         # Create temp files to parse since our engine expects file paths
-        wd_path = None
-        if workday:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as wd_tmp:
-                wd_tmp.write(await workday.read())
-                wd_path = wd_tmp.name
+        rec_path = None
+        if recruiter:
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".csv") as rec_tmp:
+                rec_tmp.write(await recruiter.read())
+                rec_path = rec_tmp.name
                 
-        gh_path = None
-        if greenhouse:
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as gh_tmp:
-                gh_tmp.write(await greenhouse.read())
-                gh_path = gh_tmp.name
+        ats_path = None
+        if ats:
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".json") as ats_tmp:
+                ats_tmp.write(await ats.read())
+                ats_path = ats_tmp.name
             
         pdf_path = None
         if resume:
@@ -64,31 +70,40 @@ async def resolve_candidates(
                 json.dump(git_data, git_tmp)
                 git_path = git_tmp.name
                 
-        grn_url_path = None
-        if greenhouse_url:
+        lin_path = None
+        if linkedin_url:
+            from ingestion.linkedin_fetcher import LinkedInFetcher
+            lin_data = LinkedInFetcher.fetch(linkedin_url)
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode='w') as lin_tmp:
+                json.dump(lin_data, lin_tmp)
+                lin_path = lin_tmp.name
+                
+        ats_url_path = None
+        if ats_url:
             from ingestion.greenhouse_fetcher import GreenhouseFetcher
-            grn_data = GreenhouseFetcher.fetch_mock_data()
-            with tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode='w') as grn_tmp:
-                json.dump(grn_data, grn_tmp)
-                grn_url_path = grn_tmp.name
+            ats_data = GreenhouseFetcher.fetch_mock_data()
+            with tempfile.NamedTemporaryFile(delete=False, suffix=".json", mode='w') as ats_tmp:
+                json.dump(ats_data, ats_tmp)
+                ats_url_path = ats_tmp.name
             
         pipeline = ResolutionPipeline()
         
-        # We need to map greenhouse_url to greenhouse_json in the pipeline if no file was uploaded
-        final_gh_path = gh_path or grn_url_path
+        # We need to map ats_url to ats_json in the pipeline if no file was uploaded
+        final_ats_path = ats_path or ats_url_path
         
         # Run resolution
         canonical_candidates = pipeline.run(
-            workday_csv=wd_path,
-            greenhouse_json=final_gh_path,
+            recruiter_csv=rec_path,
+            ats_json=final_ats_path,
             resume_pdf=pdf_path,
             github_json=git_path,
+            linkedin_json=lin_path,
             output_path=None,  # Return directly instead of saving
             include_provenance=True
         )
         
         # Cleanup
-        for path in [wd_path, gh_path, pdf_path, git_path, grn_url_path]:
+        for path in [rec_path, ats_path, pdf_path, git_path, lin_path, ats_url_path]:
             if path and os.path.exists(path):
                 os.unlink(path)
         

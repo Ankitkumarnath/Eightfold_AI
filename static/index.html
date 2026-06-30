@@ -24,50 +24,66 @@
 
         <div class="upload-section glass-panel">
             <form id="uploadForm">
-                <div class="file-inputs">
-                    <div class="file-drop-area" id="workdayDrop">
-                        <i class="fa-solid fa-file-csv"></i>
-                        <span class="file-msg">Select Workday CSV</span>
-                        <input class="file-input" type="file" id="workday" accept=".csv">
+                <div class="source-groups" style="display: grid; gap: 2rem; margin-bottom: 2rem;">
+                    <!-- Structured Group -->
+                    <div class="structured-group" style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1);">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 600;"><i class="fa-solid fa-table-list"></i> Structured Sources (Pick at least 1)</h3>
+                        <div class="file-inputs">
+                            <div class="file-drop-area" id="recruiterDrop">
+                                <i class="fa-solid fa-file-csv"></i>
+                                <span class="file-msg">Recruiter CSV</span>
+                                <input class="file-input" type="file" id="recruiter" accept=".csv">
+                            </div>
+                            
+                            <div class="file-drop-area" id="atsDrop">
+                                <i class="fa-solid fa-file-code"></i>
+                                <span class="file-msg">ATS JSON</span>
+                                <input class="file-input" type="file" id="ats" accept=".json">
+                            </div>
+                            
+                            <div class="input-group" style="flex: 1; min-width: 200px;">
+                                <label for="ats_url"><i class="fa-solid fa-link"></i> Live ATS URL</label>
+                                <input type="url" id="ats_url" placeholder="https://api.ats.io/...">
+                            </div>
+                        </div>
                     </div>
-                    
-                    <div class="file-drop-area" id="greenhouseDrop">
-                        <i class="fa-solid fa-file-code"></i>
-                        <span class="file-msg">Select Greenhouse JSON</span>
-                        <input class="file-input" type="file" id="greenhouse" accept=".json">
-                    </div>
-                    
-                    <div class="file-drop-area" id="resumeDrop">
-                        <i class="fa-solid fa-file-pdf"></i>
-                        <span class="file-msg">Optional PDF Resume</span>
-                        <input class="file-input" type="file" id="resume" accept=".pdf">
-                    </div>
-                    
-                    <div class="file-drop-area" id="githubDrop">
-                        <i class="fa-brands fa-github"></i>
-                        <span class="file-msg">Optional GitHub JSON</span>
-                        <input class="file-input" type="file" id="github" accept=".json">
-                    </div>
-                    
-                    <div class="file-drop-area" id="notesDrop">
-                        <i class="fa-solid fa-note-sticky"></i>
-                        <span class="file-msg">Optional Notes TXT</span>
-                        <input class="file-input" type="file" id="notes" accept=".txt">
+
+                    <!-- Unstructured Group -->
+                    <div class="unstructured-group" style="background: rgba(255,255,255,0.03); padding: 1.5rem; border-radius: 12px; border: 1px dashed rgba(255,255,255,0.1);">
+                        <h3 style="margin-bottom: 1rem; color: var(--text-primary); font-weight: 600;"><i class="fa-solid fa-align-left"></i> Unstructured Sources (Pick at least 1)</h3>
+                        <div class="file-inputs">
+                            <div class="file-drop-area" id="resumeDrop">
+                                <i class="fa-solid fa-file-pdf"></i>
+                                <span class="file-msg">Resume PDF</span>
+                                <input class="file-input" type="file" id="resume" accept=".pdf">
+                            </div>
+                            
+                            <div class="file-drop-area" id="githubDrop">
+                                <i class="fa-brands fa-github"></i>
+                                <span class="file-msg">GitHub JSON</span>
+                                <input class="file-input" type="file" id="github" accept=".json">
+                            </div>
+                            
+                            <div class="file-drop-area" id="notesDrop">
+                                <i class="fa-solid fa-note-sticky"></i>
+                                <span class="file-msg">Notes TXT</span>
+                                <input class="file-input" type="file" id="notes" accept=".txt">
+                            </div>
+
+                            <div class="input-group" style="flex: 1; min-width: 200px;">
+                                <label for="github_url"><i class="fa-brands fa-github"></i> Live GitHub URL</label>
+                                <input type="url" id="github_url" placeholder="https://github.com/username">
+                            </div>
+
+                            <div class="input-group" style="flex: 1; min-width: 200px; margin-top: 1rem;">
+                                <label for="linkedin_url"><i class="fa-brands fa-linkedin"></i> Live LinkedIn URL</label>
+                                <input type="url" id="linkedin_url" placeholder="https://linkedin.com/in/username">
+                            </div>
+                        </div>
                     </div>
                 </div>
-                
-                <h3 style="margin-bottom: 1rem; color: var(--text-secondary); font-weight: 500;">Or Paste Live Profile URLs:</h3>
-                <div class="url-inputs" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 2rem; margin-bottom: 2rem;">
-                    <div class="input-group">
-                        <label for="github_url" style="color: var(--text-secondary);"><i class="fa-brands fa-github"></i> GitHub URL</label>
-                        <input type="text" id="github_url" name="github_url" placeholder="https://github.com/username" style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: white; border-radius: 8px; margin-top: 0.5rem; outline: none;">
-                    </div>
-                    <div class="input-group">
-                        <label for="greenhouse_url" style="color: var(--text-secondary);"><i class="fa-solid fa-file-code"></i> Greenhouse URL</label>
-                        <input type="text" id="greenhouse_url" name="greenhouse_url" placeholder="https://app.greenhouse.io/..." style="width: 100%; padding: 0.75rem; background: rgba(0,0,0,0.2); border: 1px solid var(--border-color); color: white; border-radius: 8px; margin-top: 0.5rem; outline: none;">
-                    </div>
-                </div>
-                
+
+
                 <button type="submit" id="submitBtn" class="btn-primary">
                     <span>Resolve Candidates</span>
                     <i class="fa-solid fa-arrow-right"></i>
@@ -97,6 +113,6 @@
         </div>
     </div>
 
-    <script src="/static/script.js?v=5"></script>
+    <script src="/static/script.js?v=6"></script>
 </body>
 </html>
